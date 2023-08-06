@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="ISO-8859-1">
-    <title>Rain World Map</title>
+    <title>Rain World 地图</title>
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 
     <meta property="og:image" content="https://rain-world-map.github.io/embed.jpg" />
@@ -144,6 +144,10 @@
             left: 24px;
         }
 
+        .left-panel:hover #region-select {
+            display: block;
+        }
+
         #modded-ckb-group {
             position: relative;
             top: 6px;
@@ -183,6 +187,7 @@
         #region-select {
             padding-left: 8px;
             padding-right: 8px;
+            display: none;
         }
 
         .scroll-ish {
@@ -216,18 +221,18 @@
 
     <div class="side-panel left-panel rw-text">
         <div style="padding-left: 8px; padding-bottom: 8px;">
-            <span>Regions</span>
+            <span>区域</span>
         </div>
 
         <form name="regionselect" id="region-select" class="scroll-ish"></form>
     </div>
 
     <div class="side-panel right-panel rw-text">
-        <div>Slugcat</div>
+        <div>蛞蝓猫</div>
         <form name="difficulty" class="difficulty-select" id="scug-selector">
         </form>
 
-        <div>Layers</div>
+        <div>图层</div>
         <div id="layer-content" class="scroll-ish"></div>
     </div>
 
@@ -239,7 +244,7 @@
         var region_order = [];
         var regions = {};
 
-        getJsonObject("slugcats.json", function (json) { slugcats = json; }, false);
+        getJsonObject("slugcats_zh.json", function (json) { slugcats = json; }, false);
 
         var html = "";
         for (const slugcatName in slugcats) {
@@ -643,9 +648,9 @@
                     }
                 });
                 if (hadRooms) roomsLayer.addTo(map);
-                overlays.addOverlay(roomsLayer, "Rooms");
+                overlays.addOverlay(roomsLayer, "房间");
                 if (hadNames) roomNames.addTo(map);
-                overlays.addOverlay(roomNames, "Room Names");
+                overlays.addOverlay(roomNames, "编号");
 
                 // Connections
                 let hadConnections = map.hasLayer(connectionsLayer) || loadedRegion == null;
@@ -661,7 +666,7 @@
                     interactive: false,
                 });
                 if (hadConnections) connectionsLayer.addTo(map);
-                overlays.addOverlay(connectionsLayer, "Connections");
+                overlays.addOverlay(connectionsLayer, "连接");
 
                 // Geometry
                 let hadGeometry = map.hasLayer(geometryLayer) || loadedRegion == null;
@@ -677,7 +682,7 @@
                     lineJoin: "miter",
                 });
                 if (hadGeometry) geometryLayer.addTo(map);
-                overlays.addOverlay(geometryLayer, "Geometry");
+                overlays.addOverlay(geometryLayer, "轮廓");
 
                 // Spawns
                 let hadSpawns = map.hasLayer(densLayer) || loadedRegion == null;
@@ -746,7 +751,7 @@
                     },
                 });
                 if (hadSpawns) densLayer.addTo(map);
-                overlays.addOverlay(densLayer, "Spawns");
+                overlays.addOverlay(densLayer, "生成");
 
                 // Zoom to room on rooms loaded
                 let foundRoom = false;
